@@ -12,3 +12,5 @@ Section 2: TypeScript Basics & Basic Types - https://docs.google.com/document/d/
 Section 3: The TypeScript Compiler (and its configuration) - https://docs.google.com/document/d/1aqnrcVMsj_PB2RU-9WuY-SjDbLo5F6KVfk4E3aFVqzI/edit?usp=sharing
 
 Section 4: Next-generation JavaScript & TypeScript - https://docs.google.com/document/d/1DxVeJ_ub3Dh5pP4bz5M-goT2w7wjq6_Y6lOTJ7wcgAM/edit?usp=sharing
+
+Section 5: Classes & Interfaces: https://docs.google.com/document/d/1N58N66GY07FL5zLNb_zpBl62JxS78QPcQ-lcsyUhTl8/edit?usp=sharing
