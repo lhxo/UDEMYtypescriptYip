@@ -87,3 +87,8 @@ function createCourseGoal(title: string, description: string, date: Date):Course
     courseGoal.completeUntil = date;
     return courseGoal as CourseGoal;
 }
+
+const names: Readonly<string[]> = ['Christopher', 'Vani'];
+// names.push('Albert')
+// names.pop()
+
