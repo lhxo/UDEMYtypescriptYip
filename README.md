@@ -13,6 +13,6 @@ Section 3: The TypeScript Compiler (and its configuration) - https://docs.google
 
 Section 4: Next-generation JavaScript & TypeScript - https://docs.google.com/document/d/1DxVeJ_ub3Dh5pP4bz5M-goT2w7wjq6_Y6lOTJ7wcgAM/edit?usp=sharing
 
-Section 5: Classes & Interfaces: https://docs.google.com/document/d/1N58N66GY07FL5zLNb_zpBl62JxS78QPcQ-lcsyUhTl8/edit?usp=sharing
+Section 5: Classes & Interfaces - https://docs.google.com/document/d/1N58N66GY07FL5zLNb_zpBl62JxS78QPcQ-lcsyUhTl8/edit?usp=sharing
 
-Section 6: Advanced Types: https://docs.google.com/document/d/1eT9IfnBYCHFvJFrkhIuNnQHB9lZ78teOHiIP8_MWv_c/edit?usp=sharing
+Section 6: Advanced Types - https://docs.google.com/document/d/1eT9IfnBYCHFvJFrkhIuNnQHB9lZ78teOHiIP8_MWv_c/edit?usp=sharing
