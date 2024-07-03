@@ -18,3 +18,5 @@ Section 5: Classes & Interfaces - https://docs.google.com/document/d/1N58N66GY07
 Section 6: Advanced Types - https://docs.google.com/document/d/1eT9IfnBYCHFvJFrkhIuNnQHB9lZ78teOHiIP8_MWv_c/edit?usp=sharing
 
 Section 7: Generics - https://docs.google.com/document/d/1YDaGi3HMC-BlI9UqxhrxjwSsyCac1WiSxtt1XdNtJaw/edit?usp=sharing
+
+Section 8: Decorators - https://docs.google.com/document/d/14xtk5xEnXD3n_NiUpOv95LNbokQuPhhcPCYQiT-xFD0/edit?usp=sharing
