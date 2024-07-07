@@ -20,3 +20,5 @@ Section 6: Advanced Types - https://docs.google.com/document/d/1eT9IfnBYCHFvJFrk
 Section 7: Generics - https://docs.google.com/document/d/1YDaGi3HMC-BlI9UqxhrxjwSsyCac1WiSxtt1XdNtJaw/edit?usp=sharing
 
 Section 8: Decorators - https://docs.google.com/document/d/14xtk5xEnXD3n_NiUpOv95LNbokQuPhhcPCYQiT-xFD0/edit?usp=sharing
+
+Section 9: Practice Time! Let's build a Drag & Drop Project - https://docs.google.com/document/d/1hbS9tTrCCsImBckBZa6JGxbm4IWMMqRCIlTn597EPI8/edit?usp=sharing
