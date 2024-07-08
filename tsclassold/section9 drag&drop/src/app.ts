@@ -1,12 +1,40 @@
-//Project State Mentement
+//Created the custom project type allows us to accept only arrays of type Project[]
+//This allows for better coding practice than to accept any type. Now everything
+//must have these parameters.
+//Project Type
+enum ProjectStatus {Active, Finished}
 
-class ProjectState {
-    private listeners: any[] = [];
-    private projects: any[] = [];
+class Project {
+    constructor(
+        public id: string, 
+        public title: string, 
+        public description: string, 
+        public people: number, 
+        public status: ProjectStatus
+    ) {
+
+    }
+}
+
+//Project State Mentement
+//Listener is a function that receives our array of projects and does soemthing to it. 
+//We don't care about the data that is returned. 
+type Listener<T> = (items: T[]) => void;
+
+class State<T> {
+    protected listeners: Listener<T>[] = [];
+
+    addListener(listenerFunction: Listener<T>) {
+        this.listeners.push(listenerFunction)
+    }
+}
+
+class ProjectState extends State<Project>{
+    private projects: Project[] = [];
     private static instance: ProjectState
     
     private constructor() {
-
+        super();
     }
 
     static getInstance() {
@@ -17,17 +45,14 @@ class ProjectState {
         return this.instance
     }
 
-    addListener(listenerFunction: Function) {
-        this.listeners.push(listenerFunction)
-    }
-
     addProject(title: string, description: string, numberOfPeople: number) {
-        const newProject = {
-            id: Math.random().toString(),
-            title: title,
-            description: description,
-            people: numberOfPeople
-        };
+        const newProject = new Project(
+            Math.random().toString(),
+            title,
+            description,
+            numberOfPeople,
+            ProjectStatus.Active
+        )
         this.projects.push(newProject)
         for(const listenerFunction of this.listeners) {
             listenerFunction(this.projects.slice());
@@ -101,76 +126,116 @@ function Autobind(_1: any, _2: string, descriptor: PropertyDescriptor) {
     return adjustedDescriptor
 }
 
-// Renders active and finished projects and stores them in a list.
-// ProjectList Class
-class ProjectList {
+// Component Base Class
+abstract class Component<T extends HTMLElement, U extends HTMLElement>{
     //Inside a template that will be rendered.
     templateElement: HTMLTemplateElement;
     //This is still where we are rendering the data (app)
-    hostElement: HTMLDivElement;
+    hostElement: T;
     //Note that this is HTMLElement instead of form due to us working with the data 
-    element: HTMLElement;
-    //
-    assignedProjects: any[];
+    element: U;
 
-    //our constructor requires a parameter that is either marked as active or finished
-    constructor(private type: 'active' | 'finished') {
-        this.templateElement = document.getElementById('project-list')! as HTMLTemplateElement;
+    constructor(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string) {
+        this.templateElement = document.getElementById(templateId)! as HTMLTemplateElement;
         //Where I want to render
-        this.hostElement = document.getElementById('app')! as HTMLDivElement;
-        this.assignedProjects = [];
-        
+        this.hostElement = document.getElementById(hostElementId)! as T;
+
         //This will render the content of templateElement (title/description/people)
         //importNode is a global document object, it's parameters are (what you want to import, deep clone/all levels of nesting)
         const importedNode = document.importNode(this.templateElement.content, true)
         //This will be the <h1>
-        this.element = importedNode.firstElementChild as HTMLElement;
+        this.element = importedNode.firstElementChild as U;
         //applies the id of either active/finished, this allows for our rendered form element to access our css
-        this.element.id = `${this.type}-projects`
+        if (newElementId) {
+            this.element.id = newElementId
+        }
 
-        projectState.addListener((projects: any[]) =>{
-            this.assignedProjects = projects;
-            this.renderProjects()
-        });
+        this.attach(insertAtStart);
+    }
 
-        //Will render before the end of the template (so at the bottom)
-        this.attach()
+    //render list to the dom
+    private attach(insertAtBeginning: boolean) {
+        //insertAdjacentElement is another global document object. The first argument is (after begin/end or before begin/end, what we want to insert)
+        this.hostElement.insertAdjacentElement(insertAtBeginning ? 'afterbegin':'beforeend', this.element);
+    }
+
+    abstract configure(): void;
+    abstract renderContent(): void;
+}
+
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+    private project: Project;
+
+    constructor(hostId: string, project: Project){
+        super('single-project', hostId, false, project.id)
+        this.project = project
+
+        this.configure();
+        this.renderContent();
+    }
+
+    configure() {}
+    renderContent() {
+        this.element.querySelector('h2')!.textContent = this.project.title
+        this.element.querySelector('h3')!.textContent = this.project.people.toString();
+        this.element.querySelector('p')!.textContent = this.project.description
+    }
+}
+
+// Renders active and finished projects and stores them in a list.
+// ProjectList Class
+class ProjectList extends Component<HTMLDivElement, HTMLElement>{
+    //Create a default property that accepts any type of array. This will hold the current project
+    //or object that we are working on.
+    assignedProjects: Project[];
+
+    //our constructor requires a parameter that is either marked as active or finished
+    constructor(private type: 'active' | 'finished') {
+        super('project-list', 'app', false, `${type}-projects`);
+        //Where I want to render
+        this.assignedProjects = [];
+
+        //runs the listener
+        this.configure()
         //render the list and the container
         this.renderContent()
     }
 
-    //
-    private renderProjects() {
-        const listElement = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
-        for(const projectItem of this.assignedProjects) {
-            const listItem = document.createElement('li');
-            listItem.textContent = projectItem.title;
-            listElement.appendChild(listItem)
-        }
-    }
+    configure() {
+        projectState.addListener((projects: Project[]) =>{
+            const relevantProjects = projects.filter(prj => {
+                if(this.type === 'active') {
+                    return prj.status === ProjectStatus.Active;
+                } else {
+                    return prj.status === ProjectStatus.Finished;
+                }
+            })
+            this.assignedProjects = relevantProjects;
+            this.renderProjects()
+        });
+    };
 
     //render the list and the container
-    private renderContent() {
+    renderContent() {
         const listId = `${this.type}-projects-list`;
         this.element.querySelector('ul')!.id = listId;
         this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ` PROJECTS`
     }
 
-    //render list to the dom
-    private attach() {
-        //insertAdjacentElement is another global document object. The first argument is (after begin/end or before begin/end, what we want to insert)
-        this.hostElement.insertAdjacentElement('beforeend', this.element);
+    //
+    private renderProjects() {
+        const listElement = document.getElementById(`${this.type}-projects-list`)! as HTMLUListElement;
+        listElement.innerHTML = '';
+        for(const projectItem of this.assignedProjects) {
+            new ProjectItem(this.element.querySelector('ul')!.id, projectItem)
+        }
     }
 }
 
 //Handles the rendering the form, getting user input, sets parameters for validation, stores user input
 //ProjectInput Class
-class ProjectInput {
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
     //tsconfig allows us to use html typing due to dom:true
-    //If we know specifically what type of element, it is best to specify
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    element: HTMLFormElement;
     //Form elements
     titleInputElement: HTMLInputElement;
     descriptionInputElement: HTMLInputElement;
@@ -178,17 +243,7 @@ class ProjectInput {
 
     //The constructor will select the data and the setup then run our insertion methods below.
     constructor() {
-        //What content I want to render
-        this.templateElement = document.getElementById('project-input')! as HTMLTemplateElement;
-        //Where I want to render
-        this.hostElement = document.getElementById('app')! as HTMLDivElement;
-        
-        //This will render the content of templateElement (title/description/people)
-        //importNode is a global document object, it's parameters are (what you want to import, deep clone/all levels of nesting)
-        const importedNode = document.importNode(this.templateElement.content, true)
-        this.element = importedNode.firstElementChild as HTMLFormElement;
-        //applies the id 'user-input', this allows for our rendered form element to access our css
-        this.element.id = 'user-input'
+        super('project-input', 'app', true, 'user-input')
 
         //We assign these elements to the id's of our forms. This allows us to store our content of those id's in these variables.
         this.titleInputElement = this.element.querySelector('#title') as HTMLInputElement;
@@ -197,10 +252,18 @@ class ProjectInput {
 
         //Executes our methods
         this.configure()
-        this.attach()
     }
 
-    //We are separating the methods that insert the data outside of the constructor.
+    configure() {
+        //This is our event listener to when we click our submit button
+        //A reminder that we have to bind or create an autobind decorator because addEventListener will point at undefined instead of this.
+        this.element.addEventListener('submit', this.submitHandler)
+
+    }
+
+    renderContent() {
+        
+    }
 
     //We are gathering the user's input for title, description, and people and storing it into a tuple (defined array)
     //Additionally we either return a tuple or void. The void catches our validation. We also describe our requirements
@@ -268,18 +331,6 @@ class ProjectInput {
             projectState.addProject(title,description,people);
             this.clearInputs()
         }
-    }
-    
-    private configure() {
-        //This is our event listener to when we click our submit button
-        //A reminder that we have to bind or create an autobind decorator because addEventListener will point at undefined instead of this.
-        this.element.addEventListener('submit', this.submitHandler)
-
-    }
-
-    private attach() {
-        //insertAdjacentElement is another global document object. The first argument is (after begin/end or before begin/end, what we want to insert)
-        this.hostElement.insertAdjacentElement('afterbegin', this.element);
     }
 }
 
