@@ -28,3 +28,5 @@ Section 10: Module Code / Your Options - https://docs.google.com/document/d/1YEs
 Section 11: Using Webpack with TypeScript - https://docs.google.com/document/d/1Cqx6nLL-MwmfOZP883Ra3DS-Cr7fr-wdBYsbWnwlxdw/edit?usp=sharing
 
 Section 12: 3rd Party Libraries & TypeScript - https://docs.google.com/document/d/1Zr1zWq5GbTQmdOvmR7WEhh-oIJOXXUUR9qTE0b54w0Y/edit?usp=sharing
+
+Section 13: Time to Practice! Let's build a "Select & Share a Place" App - https://docs.google.com/document/d/1HE3qLjLsKvxKRU89grypX4Ex08ZHCPXUNYzRJNeJXUY/edit?usp=sharing
