@@ -26,3 +26,5 @@ Section 9: Practice Time! Let's build a Drag & Drop Project - https://docs.googl
 Section 10: Module Code / Your Options - https://docs.google.com/document/d/1YEsAucmScPGpMrL6-Xz-zFMp4KLHvvfuq3Uq8RQiiYk/edit?usp=sharing
 
 Section 11: Using Webpack with TypeScript - https://docs.google.com/document/d/1Cqx6nLL-MwmfOZP883Ra3DS-Cr7fr-wdBYsbWnwlxdw/edit?usp=sharing
+
+Section 12: 3rd Party Libraries & TypeScript - https://docs.google.com/document/d/1Zr1zWq5GbTQmdOvmR7WEhh-oIJOXXUUR9qTE0b54w0Y/edit?usp=sharing
