@@ -24,3 +24,5 @@ Section 8: Decorators - https://docs.google.com/document/d/14xtk5xEnXD3n_NiUpOv9
 Section 9: Practice Time! Let's build a Drag & Drop Project - https://docs.google.com/document/d/1hbS9tTrCCsImBckBZa6JGxbm4IWMMqRCIlTn597EPI8/edit?usp=sharing
 
 Section 10: Module Code / Your Options - https://docs.google.com/document/d/1YEsAucmScPGpMrL6-Xz-zFMp4KLHvvfuq3Uq8RQiiYk/edit?usp=sharing
+
+Section 11: Using Webpack with TypeScript - https://docs.google.com/document/d/1Cqx6nLL-MwmfOZP883Ra3DS-Cr7fr-wdBYsbWnwlxdw/edit?usp=sharing
