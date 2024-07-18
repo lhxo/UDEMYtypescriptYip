@@ -1,5 +1,5 @@
 # UDEMYtypescriptYip
-This is a repository for my work done on the Understanding TypeScript class I am taking on Udemy. I started this class on 6/18/24
+This is a repository for my work done on the Understanding TypeScript class I am taking on Udemy. I started this class on 6/18/24, finished on 7/18/24
 
 
 Notes
